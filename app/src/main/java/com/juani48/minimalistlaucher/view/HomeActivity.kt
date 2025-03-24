@@ -56,7 +56,7 @@ fun HomeActivity(context: Context, appViewModel: AppViewModel){
 
 @Composable
 fun SetContent(context: Context, appViewModel: AppViewModel){
-    var list by remember { mutableStateOf(appViewModel.loadInstalledApps(context)) }
+    var list by remember { mutableStateOf( appViewModel.loadInstalledApps(context)) }
     var text by remember { mutableStateOf("") }
 
     Column(
@@ -72,7 +72,8 @@ fun SetContent(context: Context, appViewModel: AppViewModel){
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = text,
-                onValueChange = {text = it; list = appViewModel.searchApp(text)},
+                onValueChange = {
+                    text = it; list = appViewModel.searchApp(text)},
                 label = { Text("Search") },
                 singleLine = true,
                 colors = TextFieldDefaults.colors(
@@ -95,13 +96,7 @@ fun SetContent(context: Context, appViewModel: AppViewModel){
                 .align(Alignment.CenterHorizontally)
         ) {
             items(list){
-                    item -> AppItem(
-                        item,
-                        { appViewModel.launchApp(context, item);
-                            text = "";
-                            list.clear();
-                            list.addAll(appViewModel.loadInstalledApps(context))
-                        }
+                    item -> AppItem(item, { appViewModel.launchApp(context, item) }
                     )
             }
         }
