@@ -95,7 +95,14 @@ fun SetContent(context: Context, appViewModel: AppViewModel){
                 .align(Alignment.CenterHorizontally)
         ) {
             items(list){
-                    item -> AppItem(item, { appViewModel.launchApp(context, item); text = ""; list = appViewModel.loadInstalledApps(context) })
+                    item -> AppItem(
+                        item,
+                        { appViewModel.launchApp(context, item);
+                            text = "";
+                            list.clear();
+                            list.addAll(appViewModel.loadInstalledApps(context))
+                        }
+                    )
             }
         }
     }
